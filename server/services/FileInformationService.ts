@@ -1,4 +1,4 @@
-import { MigrationLinkExchangeApiClient } from '../data/migrationLinkExchangeApiClient'
+import MigrationLinkExchangeApiClient from '../data/migrationLinkExchangeApiClient'
 
 export default class FileInformationService {
   constructor(private readonly migrationLinkExchangeApiClient: MigrationLinkExchangeApiClient) {}
