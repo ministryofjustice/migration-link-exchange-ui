@@ -11,6 +11,7 @@ generic-service:
     INGRESS_URL: "https://migration-link-exchange-dev.hmpps.service.justice.gov.uk"
     ENVIRONMENT_NAME: DEV
     AUDIT_ENABLED: "false"
+    MIGRATION_LINK_EXCHANGE_API_URL: "https://migration-link-exchange-api-dev.hmpps.service.justice.gov.uk"
 
 generic-prometheus-alerts:
   alertSeverity: N/A
