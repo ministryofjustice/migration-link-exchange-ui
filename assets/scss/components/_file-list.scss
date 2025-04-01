@@ -1,0 +1,52 @@
+$track-background: #f1f1f1;
+$thumb-background: #888;
+
+.file-list {
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: govuk-spacing(3);
+
+  // sass-lint:disable no-vendor-prefixes
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  // sass-lint:disable no-vendor-prefixes
+  &::-webkit-scrollbar-track {
+    background: $track-background;
+    border-radius: 0px;
+  }
+
+  // sass-lint:disable no-vendor-prefixes
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-background;
+    border-radius: 0px;
+  }
+
+  &__item {
+    &:not(:last-child) {
+      border-bottom: 1px solid $govuk-border-colour;
+      margin-bottom: govuk-spacing(3);
+    }
+
+    &__metadata {
+      @include govuk-font($size: 16);
+      color: govuk-colour('dark-grey');
+      display: grid;
+      grid-template-columns: max-content 1fr; /* First column auto-sizes, second expands */
+      gap: 10px 20px; /* Row gap of 10px, column gap of 20px */
+      align-items: start; /* Aligns all items to the top */
+      max-width: 600px; /* Optional: Adjust width as needed */
+
+      dt {
+        font-weight: bold;
+        white-space: nowrap; /* Prevents wrapping */
+      }
+
+      dd {
+        margin: 0;
+        word-break: break-word; /* Ensures long text wraps properly */
+      }
+    }
+  }
+}

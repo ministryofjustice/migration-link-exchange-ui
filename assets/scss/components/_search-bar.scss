@@ -1,0 +1,29 @@
+.search-bar {
+  &__search {
+    display: flex;
+    flex-direction: row; /* Or row, depending on layout */
+    align-items: flex-end; /* Ensures items don't stretch vertically */
+    margin-bottom: govuk-spacing(2);
+
+    .govuk-form-group {
+      flex-grow: 1; /* Prevents items from growing */
+      margin-bottom: 0;
+    }
+
+    button {
+      flex-grow: 0; /* Prevents items from growing */
+      flex-shrink: 0; /* Prevents items from shrinking */
+      margin-bottom: 2px;
+      width: unset;
+    }
+
+    & > *:not(:last-child) {
+      margin-right: govuk-spacing(2);
+    }
+  }
+
+  &__options {
+    display: flex;
+    white-space: nowrap;
+  }
+}
