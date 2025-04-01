@@ -1,0 +1,20 @@
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% extends "govuk/template.njk" %}
+
+{% block head %}
+  <link href="{{ '/assets/css/app.css' | assetMap }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
+
+{% block header %}
+  {% include "partials/header.njk" %}
+{% endblock %}
+
+{% block bodyStart %}
+{% endblock %}
+
+{% block bodyEnd %}
+  <script type="module" src="{{ '/assets/js/app.js' | assetMap }}"></script>
+{% endblock %}

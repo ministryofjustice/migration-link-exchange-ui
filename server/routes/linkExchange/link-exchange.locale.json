@@ -1,0 +1,30 @@
+{
+  "mainHeading": {
+    "title": "Exchange link"
+  },
+  "search": {
+    "prompt": "Enter a Google Drive link",
+    "button": "Resolve link",
+    "autoResolve": "Automatically paste and resolve Google Drive links"
+  },
+  "fileDisplay": {
+    "prefixes": {
+      "path": "Path:",
+      "owner": "Owner:"
+    },
+    "goTos": {
+      "folder": "Go to Sharepoint folder",
+      "file": "Go to Sharepoint file",
+      "form": "Go to Microsoft Forms"
+    },
+    "noResults": "No matching files found &#128546;",
+    "suggestions": [
+      "Check that you have copied and pasted the full link correctly.",
+      "If you know the file owner, ask them if the file was included in the migration."
+    ]
+  },
+  "errors": {
+    "noLinkProvided": "Enter a Google Drive link.",
+    "invalidLink": "Enter a valid Google Drive link."
+  }
+}

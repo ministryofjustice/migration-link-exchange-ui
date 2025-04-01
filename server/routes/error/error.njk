@@ -1,0 +1,39 @@
+{% extends "partials/layout.njk" %}
+
+{% set pageTitle = applicationName + " - Home" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">{{ locale.mainHeading.title }}</h1>
+
+      <code>
+        Status code: {{ error.status }}
+        {% if error.status === 404 %}
+          - {{ error.message }}
+        {% endif %}
+      </code>
+
+      <div class="govuk-!-margin-top-8">
+        <ul class="govuk-list govuk-list--bullet">
+          {% for suggestion in locale.suggestions %}
+            <li class="govuk-body-m">{{ suggestion }}</li>
+          {% else %}
+            <li class="govuk-body-m">Please try again later.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  {% if error.status !== 404 %}
+    <div class="govuk-grid-row govuk-!-margin-top-4">
+      <div class="govuk-grid-column-full">
+        <code class="code-block">
+          <pre>{{ error.stack }}</pre>
+        </code>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

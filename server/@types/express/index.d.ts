@@ -1,5 +1,3 @@
-import { HmppsUser } from '../../interfaces/hmppsUser'
-
 export declare module 'express-session' {
   // Declare that the session will potentially contain these additional fields
   interface SessionData {
@@ -19,11 +17,7 @@ export declare global {
     interface Request {
       verified?: boolean
       id: string
-      logout(done: (err: unknown) => void): void
-    }
-
-    interface Locals {
-      user: HmppsUser
+      errors: Record<string, string>
     }
   }
 }

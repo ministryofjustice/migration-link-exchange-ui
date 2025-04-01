@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/file-migration.csv"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "text/csv"
+    },
+    "bodyFileName": "test-file-migration.csv"
+  }
+}

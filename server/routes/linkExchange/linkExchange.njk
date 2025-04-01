@@ -1,0 +1,85 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% set pageTitle = applicationName + " - Home" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">{{ locale.mainHeading.title }}</h1>
+    </div>
+      <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+        <div class="search-bar">
+              <div class="search-bar__search">
+                  {{ govukInput({
+                      label: {
+                          text: locale.search.prompt
+                      },
+                      id: "link",
+                      name: "link",
+                      errorMessage: {
+                        text: errors.link
+                      } if errors.link,
+                      value: data.form.link | default('')
+                  }) }}
+                  {{ govukButton({
+                      text: locale.search.button,
+                      type: 'submit'
+                  }) }}
+              </div>
+              <div class="search-bar__options">
+                  {{ govukCheckboxes({
+                      name: "options",
+                      classes: "govuk-checkboxes--small",
+                      items: [
+                          {
+                              value: "autoResolve",
+                              text: locale.search.autoResolve
+                          }
+                      ]
+                  }) }}
+              </div>
+          </div>
+      </form>
+      </div>
+
+    <div class="govuk-grid-column-three-quarters">
+      <div class="file-list">
+        {% if data.files.length > 0 %}
+          {% for file in data.files %}
+            <div class="file-list__item">
+              <a class="govuk-link govuk-heading-m govuk-!-margin-bottom-2" href="{{ file.microsoftUrl }}">
+                {% if file.microsoftFileType === 'folder' %}
+                  {{ locale.fileDisplay.goTos.folder }}
+                {% elif file.microsoftFileType === 'MicrosoftForm' %}
+                  {{ locale.fileDisplay.goTos.form }}
+                {% else %}
+                  {{ locale.fileDisplay.goTos.file }}
+                {% endif %}
+              </a>
+              <dl class="file-list__item__metadata">
+                <dt>{{ locale.fileDisplay.prefixes.path }}</dt>
+                <dd>{{ file.microsoftPath }}</dd>
+                <dt>{{ locale.fileDisplay.prefixes.owner }}</dt>
+                <dd>{{ file.googleOwnerEmail }}</dd>
+              </dl>
+            </div>
+          {% endfor %}
+        {% elif data.files.length == 0 %}
+          <div class="file-list__item--no-results">
+            <p class="govuk-heading-m">{{ locale.fileDisplay.noResults | safe }}</p>
+            <ul class="govuk-list govuk-list--bullet">
+              {% for suggestion in locale.fileDisplay.suggestions %}
+                <li>{{ suggestion }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

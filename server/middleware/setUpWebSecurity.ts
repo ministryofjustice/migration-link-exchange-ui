@@ -1,7 +1,8 @@
 import crypto from 'crypto'
 import express, { Router, Request, Response, NextFunction } from 'express'
 import helmet from 'helmet'
-import config from '../config'
+
+const production = process.env.NODE_ENV === 'production'
 
 export default function setUpWebSecurity(): Router {
   const router = express.Router()
@@ -27,7 +28,12 @@ export default function setUpWebSecurity(): Router {
           scriptSrc: ["'self'", (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`],
           styleSrc: ["'self'", (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`],
           fontSrc: ["'self'"],
-          formAction: [`'self' ${config.apis.hmppsAuth.externalUrl}`],
+          formAction: [
+            `'self'`,
+            'http://localhost:*', // Allow any port on localhost (dev environment)
+            'https://*.gov.uk', // Allow any subdomain on gov.uk
+          ],
+          ...(production ? {} : { upgradeInsecureRequests: null }),
         },
       },
       crossOriginEmbedderPolicy: true,

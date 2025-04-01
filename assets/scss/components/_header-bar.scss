@@ -30,12 +30,8 @@
     }
 
     &__service-name {
-      display: none;
+      display: inline-block;
       @include govuk-font(24);
-
-      @include govuk-media-query($from: desktop) {
-        display: inline-block;
-      }
     }
   }
 

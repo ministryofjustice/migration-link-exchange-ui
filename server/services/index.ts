@@ -1,14 +1,13 @@
 import { dataAccess } from '../data'
-import AuditService from './auditService'
+import FileInformationService from './FileInformationService'
 
 export const services = () => {
-  const { applicationInfo, hmppsAuditClient } = dataAccess()
-
-  const auditService = new AuditService(hmppsAuditClient)
+  const { applicationInfo, migrationLinkExchangeApi } = dataAccess()
+  const fileInformationService = new FileInformationService(migrationLinkExchangeApi)
 
   return {
     applicationInfo,
-    auditService,
+    fileInformationService,
   }
 }
 

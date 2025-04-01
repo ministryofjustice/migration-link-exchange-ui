@@ -1,0 +1,33 @@
+services:
+  wiremock:
+    image: wiremock/wiremock:3.3.1
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./wiremock:/home/wiremock
+    command:
+      - --global-response-templating
+      - --verbose
+
+  api:
+    depends_on:
+      - wiremock
+    environment:
+      APP_MIGRATION_CSV_URL: http://wiremock:8080/file-migration.csv
+
+  ui:
+    image: ghcr.io/ministryofjustice/migration-link-exchange-ui:local
+    build:
+      target: development
+    command: npm run start:dev
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    volumes:
+      - ../:/app:cached
+      - node_modules:/app/node_modules
+
+volumes:
+  node_modules:
+    external: true
+    name: ${COMPOSE_PROJECT_NAME}_node_modules
