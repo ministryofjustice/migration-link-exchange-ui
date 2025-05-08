@@ -33,6 +33,7 @@ generic-service:
     TOKEN_VERIFICATION_ENABLED: 'true'
     AUDIT_SQS_REGION: 'eu-west-2'
     AUDIT_SERVICE_NAME: 'DPS091' # Your audit service name
+    MIGRATION_LINK_EXCHANGE_API_URL: "http://migration-link-exchange-api" # Internal URL of API service
 
   # Pre-existing kubernetes secrets to load as environment variables in the deployment.
   # namespace_secrets:
