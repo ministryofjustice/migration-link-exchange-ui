@@ -5,7 +5,7 @@ generic-service:
   replicaCount: 2
 
   ingress:
-    host: migration-link-exchange-ui.hmpps.service.justice.gov.uk
+    enabled: false
 
   env:
     INGRESS_URL: "https://migration-link-exchange.hmpps.service.justice.gov.uk"
