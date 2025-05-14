@@ -1,0 +1,26 @@
+{% extends "partials/layout.njk" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% set pageTitle = applicationName + " - " + locale.mainHeading.title %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">{{ locale.mainHeading.title }}</h1>
+    </div>
+      <div class="govuk-grid-column-two-thirds">
+
+        <p class="govuk-body">{{ locale.message }}</p>
+
+        {{ govukButton({
+            text: locale.button,
+            type: 'button',
+            href: '/auth/login'
+        }) }}
+      </div>
+    </div>
+  </div>
+{% endblock %}

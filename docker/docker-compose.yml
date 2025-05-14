@@ -39,5 +39,5 @@ services:
       - "3000:3000"
     environment:
       PRODUCT_ID: GOOGLE_MIGRATION # TODO: Probably need a PRODUCT_ID
-      INGRESS_URL: 'http://localhost:9090'
+      INGRESS_URL: 'http://localhost:3000'
       MIGRATION_LINK_EXCHANGE_API_URL: 'http://api:8080'
