@@ -2,20 +2,20 @@ import { Configuration } from '@azure/msal-node'
 
 const skipAuth = process.env.OAUTH_SKIP_AUTH === 'true'
 
-let msalConfig: Configuration
-
-if (!skipAuth) {
-  if (!process.env.OAUTH_CLIENT_ID) {
-    throw new Error('Missing OAUTH_CLIENT_ID environment variable')
-  }
-  if (!process.env.OAUTH_TENANT_ID) {
-    throw new Error('Missing OAUTH_TENANT_ID environment variable')
-  }
-  if (!process.env.OAUTH_CLIENT_SECRET) {
-    throw new Error('Missing OAUTH_CLIENT_SECRET environment variable')
-  }
-  if (!process.env.EXPRESS_SESSION_SECRET) {
-    throw new Error('Missing EXPRESS_SESSION_SECRET environment variable')
+const getMsalConfig = (): Configuration => {
+  if (!skipAuth) {
+    if (!process.env.OAUTH_CLIENT_ID) {
+      throw new Error('Missing OAUTH_CLIENT_ID environment variable')
+    }
+    if (!process.env.OAUTH_TENANT_ID) {
+      throw new Error('Missing OAUTH_TENANT_ID environment variable')
+    }
+    if (!process.env.OAUTH_CLIENT_SECRET) {
+      throw new Error('Missing OAUTH_CLIENT_SECRET environment variable')
+    }
+    if (!process.env.EXPRESS_SESSION_SECRET) {
+      throw new Error('Missing EXPRESS_SESSION_SECRET environment variable')
+    }
   }
 
   /**
@@ -23,7 +23,7 @@ if (!skipAuth) {
    * For a full list of MSAL Node configuration parameters, visit:
    * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-node/docs/configuration.md
    */
-  msalConfig = {
+  return {
     auth: {
       clientId: process.env.OAUTH_CLIENT_ID, // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
       authority: `https://login.microsoftonline.com/${process.env.OAUTH_TENANT_ID}`, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
@@ -31,7 +31,7 @@ if (!skipAuth) {
     },
     system: {
       loggerOptions: {
-        loggerCallback(loglevel: number, message: string, containsPii: boolean) {
+        loggerCallback(_loglevel: number, message: string, _containsPii: boolean) {
           console.log(message)
         },
         piiLoggingEnabled: false,
@@ -41,6 +41,7 @@ if (!skipAuth) {
   }
 }
 
+const msalConfig: Configuration | null = skipAuth ? null : getMsalConfig()
 const OAUTH_REDIRECT_PATH = `/auth/redirect`
 const OAUTH_LOGOUT_REDIRECT_PATH = `/auth/login-screen?logged-out=true`
 

@@ -7,7 +7,7 @@ import msal, {
 import type { Request, Response, NextFunction } from 'express'
 
 import config from '../config'
-import { msalConfig } from '../auth-config'
+import { msalConfig as rootMsalConfig } from '../auth-config'
 
 import locale from '../routes/auth/login-screen.locale.json'
 
@@ -29,7 +29,7 @@ class AuthProvider {
       }
 
       // Render the sign-in prompt from the views folder
-      res.render('../auth/login-screen', {
+      return res.render('../auth/login-screen', {
         locale,
       })
     }
@@ -93,7 +93,7 @@ class AuthProvider {
     }
   }
 
-  handleRedirect(options = {}) {
+  handleRedirect() {
     return async (req: Request, res: Response, next: NextFunction) => {
       if (!req.body || !req.body.state) {
         return next(new Error('Error: response not found'))
@@ -124,9 +124,9 @@ class AuthProvider {
         // Ensure we're not redirecting to an arbitrary URL
         const redirectUri = state.successRedirect.startsWith('/') ? state.successRedirect : ''
 
-        res.redirect(`${config.ingressUrl}${redirectUri}`)
+        return res.redirect(`${config.ingressUrl}${redirectUri}`)
       } catch (error) {
-        next(error)
+        return next(error)
       }
     }
   }
@@ -228,8 +228,9 @@ class AuthProvider {
 
       return await response.json()
     } catch (error) {
-      throw error
+      console.log(error)
     }
+    return {}
   }
 
   /**
@@ -246,9 +247,10 @@ class AuthProvider {
     } catch (error) {
       console.log(error)
     }
+    return {}
   }
 }
 
-const authProvider = new AuthProvider(msalConfig)
+const authProvider = rootMsalConfig && new AuthProvider(rootMsalConfig)
 
 export default authProvider

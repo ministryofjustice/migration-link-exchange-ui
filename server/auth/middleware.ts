@@ -36,7 +36,7 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
     return res.redirect('/auth/login-screen') // redirect to sign-in route
   }
 
-  next()
+  return next()
 }
 
 export { session, isAuthenticated }

@@ -18,7 +18,9 @@ export default function createApp(services: Services): express.Application {
   app.set('port', process.env.PORT || 3000)
 
   // Use express-session to manage user sessions - i.e. login via Entra.
-  skipAuth || app.use(session)
+  if (!skipAuth) {
+    app.use(session)
+  }
 
   app.use(setUpWebSecurity())
   app.use(setUpHealthChecks(services.applicationInfo))
@@ -27,8 +29,10 @@ export default function createApp(services: Services): express.Application {
   nunjucksSetup(app)
 
   // Add the middleware and routes for auth.
-  skipAuth || app.use(isAuthenticated)
-  skipAuth || app.use('/auth', authRouter)
+  if (!skipAuth) {
+    app.use(isAuthenticated)
+    app.use('/auth', authRouter)
+  }
 
   app.use(routes(services))
 
