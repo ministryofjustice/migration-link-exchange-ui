@@ -1,5 +1,7 @@
 import { Configuration } from '@azure/msal-node'
 
+import logger from '../logger'
+
 const skipAuth = process.env.OAUTH_SKIP_AUTH === 'true'
 
 const getMsalConfig = (): Configuration => {
@@ -32,7 +34,7 @@ const getMsalConfig = (): Configuration => {
     system: {
       loggerOptions: {
         loggerCallback(_loglevel: number, message: string, _containsPii: boolean) {
-          console.log(message)
+          logger.info(message)
         },
         piiLoggingEnabled: false,
         logLevel: 3,

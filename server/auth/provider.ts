@@ -6,6 +6,7 @@ import msal, {
 } from '@azure/msal-node'
 import type { Request, Response, NextFunction } from 'express'
 
+import logger from '../../logger'
 import config from '../config'
 import { msalConfig as rootMsalConfig } from '../auth-config'
 
@@ -228,7 +229,7 @@ class AuthProvider {
 
       return await response.json()
     } catch (error) {
-      console.log(error)
+      logger.error(error)
     }
     return {}
   }
@@ -245,7 +246,7 @@ class AuthProvider {
 
       return await response.json()
     } catch (error) {
-      console.log(error)
+      logger.error(error)
     }
     return {}
   }
