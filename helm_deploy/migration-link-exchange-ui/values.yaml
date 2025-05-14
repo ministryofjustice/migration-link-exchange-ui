@@ -34,6 +34,9 @@ generic-service:
     AUDIT_SQS_REGION: 'eu-west-2'
     AUDIT_SERVICE_NAME: 'DPS091' # Your audit service name
     MIGRATION_LINK_EXCHANGE_API_URL: "http://migration-link-exchange-api" # Internal URL of API service
+    # See Azure Setup for more information on how to get these values.
+    # The following ID is not private, it forms part of the publicly visible oauth login url.
+    OAUTH_TENANT_ID: c6874728-71e6-41fe-a9e1-2e8c36776ad8
 
   # Pre-existing kubernetes secrets to load as environment variables in the deployment.
   # namespace_secrets:
@@ -48,6 +51,12 @@ generic-service:
     # IRSA configuration in your namespace will also be required, and then uncomment serviceAccountName above.
     # sqs-hmpps-audit-secret:
     #   AUDIT_SQS_QUEUE_URL: 'sqs_queue_url'
+    elasticache-output:
+      REDIS_HOST: primary_endpoint_address
+      REDIS_PASSWORD: auth_token
+    # Manually created secret.
+    auth-session:
+      OAUTH_CLIENT_SECRET: OAUTH_CLIENT_SECRET
 
   allowlist:
     groups:

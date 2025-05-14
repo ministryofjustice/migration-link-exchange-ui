@@ -12,20 +12,29 @@ services:
   api:
     depends_on:
       - wiremock
+      - redis
     environment:
-      APP_MIGRATION_CSV_URL: http://wiremock:8080/file-migration.csv
+      S3_BUCKET: na
+      S3_REGION: "na"
+      SKIP_IMPORT: "true"
 
   ui:
     image: ghcr.io/ministryofjustice/migration-link-exchange-ui:local
     build:
       target: development
     command: npm run start:dev
+    env_file: .env
     ports:
       - "3000:3000"
       - "9229:9229"
     volumes:
       - ../:/app:cached
       - node_modules:/app/node_modules
+
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
 
 volumes:
   node_modules:

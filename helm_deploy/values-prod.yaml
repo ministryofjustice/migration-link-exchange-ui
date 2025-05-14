@@ -11,6 +11,9 @@ generic-service:
     INGRESS_URL: "https://migration-link-exchange.hmpps.service.justice.gov.uk"
     ENVIRONMENT_NAME: PROD
     AUDIT_ENABLED: "false"
+    # See Azure Setup for more information on how to get these values.
+    # The following ID is not private, it forms part of the publicly visible oauth login url.
+    OAUTH_CLIENT_ID: "5995e47b-365d-43cb-a715-28448ad0c3a4"
 
 generic-prometheus-alerts:
   alertSeverity: N/A
