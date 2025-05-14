@@ -86,14 +86,12 @@ In this project, auth is limited to the following files:
 
 - `docker/.env` - where the environment variables are defined.
 <!-- TODO -->
-- `index.js` - where auth middleware is applied and routes are mounted.
-- `app/auth/middleware` - where the auth middleware is defined.
-- `app/auth/provider.js` - where the auth provider is defined.
-- `app/routes/auth.js` - where the auth routes are defined.
-- `app/views/login-screen.html` - where the login screen is defined.
-- `app/views/layouts/main--logged-out.html` - where the layout for the logged out state is defined.
-- `app/views/layouts/_header--logged-out.html` - where a stripped down header for the logged out state is defined.
-- `app/views/layouts/_footer--logged-out.html` - where a stripped down footer for the logged out state is defined.
+- `server/app.ts` - where auth middleware is applied and routes are mounted.
+- `server/auth/middleware` - where the auth middleware is defined.
+- `server/auth/provider.js` - where the auth provider is defined.
+- `server/routes/auth.js` - where the auth routes are defined.
+- `server/routes/auth/login-screen.locale.json` - where locales for the login screen are defined.
+- `server/routes/auth/login-screen.njk` - where the login screen is defined.
 
 The auth middleware is applied to all routes except the auth routes.
 
