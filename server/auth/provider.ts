@@ -13,6 +13,7 @@ import locale from '../routes/auth/login-screen.locale.json'
 
 class AuthProvider {
   msalConfig
+
   cryptoProvider
 
   constructor(msalConfig: Configuration) {
@@ -48,7 +49,7 @@ class AuthProvider {
       )
 
       const authCodeUrlRequestParams = {
-        state: state,
+        state,
 
         /**
          * By default, MSAL Node will add OIDC scopes to the auth code url request. For more information, visit:
@@ -59,7 +60,7 @@ class AuthProvider {
       }
 
       const authCodeRequestParams = {
-        state: state,
+        state,
 
         /**
          * By default, MSAL Node will add OIDC scopes to the auth code request. For more information, visit:
@@ -182,8 +183,8 @@ class AuthProvider {
       // Set generated PKCE codes and method as session vars
       req.session.pkceCodes = {
         challengeMethod: 'S256',
-        verifier: verifier,
-        challenge: challenge,
+        verifier,
+        challenge,
       }
 
       /**
@@ -191,7 +192,7 @@ class AuthProvider {
        * auth artifacts with desired claims. For more information, visit:
        * https://azuread.github.io/microsoft-authentication-library-for-js/ref/modules/_azure_msal_node.html#authorizationurlrequest
        * https://azuread.github.io/microsoft-authentication-library-for-js/ref/modules/_azure_msal_node.html#authorizationcoderequest
-       **/
+       * */
       req.session.authCodeUrlRequest = {
         ...authCodeUrlRequestParams,
         responseMode: msal.ResponseMode.FORM_POST, // recommended for confidential clients
@@ -223,10 +224,9 @@ class AuthProvider {
     const params = `api-version=1.1&authorization_endpoint=${encodeURIComponent(`${authority}/oauth2/v2.0/authorize`)}`
 
     try {
-
       const response = await fetch(`${endpoint}?${params}`)
 
-      return await response.json();
+      return await response.json()
     } catch (error) {
       throw error
     }
@@ -239,9 +239,9 @@ class AuthProvider {
   async getAuthorityMetadata(authority: string) {
     const endpoint = `${authority}/v2.0/.well-known/openid-configuration`
 
-    try {      
-      const response = await fetch(endpoint);
-      
+    try {
+      const response = await fetch(endpoint)
+
       return await response.json()
     } catch (error) {
       console.log(error)

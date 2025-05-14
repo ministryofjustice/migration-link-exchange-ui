@@ -1,8 +1,8 @@
-import { Configuration } from "@azure/msal-node";
+import { Configuration } from '@azure/msal-node'
 
 const skipAuth = process.env.OAUTH_SKIP_AUTH === 'true'
 
-let msalConfig: Configuration;
+let msalConfig: Configuration
 
 if (!skipAuth) {
   if (!process.env.OAUTH_CLIENT_ID) {
@@ -26,8 +26,7 @@ if (!skipAuth) {
   msalConfig = {
     auth: {
       clientId: process.env.OAUTH_CLIENT_ID, // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
-      authority:
-        'https://login.microsoftonline.com/' + process.env.OAUTH_TENANT_ID, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
+      authority: `https://login.microsoftonline.com/${process.env.OAUTH_TENANT_ID}`, // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
       clientSecret: process.env.OAUTH_CLIENT_SECRET, // Client secret generated from the app registration in Azure portal
     },
     system: {
@@ -45,9 +44,4 @@ if (!skipAuth) {
 const OAUTH_REDIRECT_PATH = `/auth/redirect`
 const OAUTH_LOGOUT_REDIRECT_PATH = `/auth/login-screen?logged-out=true`
 
-export {
-  skipAuth,
-  msalConfig,
-  OAUTH_REDIRECT_PATH,
-  OAUTH_LOGOUT_REDIRECT_PATH,
-}
+export { skipAuth, msalConfig, OAUTH_REDIRECT_PATH, OAUTH_LOGOUT_REDIRECT_PATH }

@@ -6,10 +6,7 @@
 import express from 'express'
 
 import authProvider from '../auth/provider'
-import {
-  OAUTH_REDIRECT_PATH,
-  OAUTH_LOGOUT_REDIRECT_PATH,
-} from '../auth-config'
+import { OAUTH_REDIRECT_PATH, OAUTH_LOGOUT_REDIRECT_PATH } from '../auth-config'
 import config from '../config'
 
 const router = express.Router()
