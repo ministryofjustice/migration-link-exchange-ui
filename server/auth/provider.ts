@@ -4,8 +4,6 @@ import msal, {
   type AuthorizationUrlRequest,
   type ConfidentialClientApplication,
 } from '@azure/msal-node'
-// TODO, use native fetch
-import axios from 'axios'
 import type { Request, Response, NextFunction } from 'express'
 
 import config from '../config'
@@ -222,15 +220,13 @@ class AuthProvider {
   async getCloudDiscoveryMetadata(authority: string) {
     const endpoint = 'https://login.microsoftonline.com/common/discovery/instance'
 
-    try {
-      const response = await axios.get(endpoint, {
-        params: {
-          'api-version': '1.1',
-          authorization_endpoint: `${authority}/oauth2/v2.0/authorize`,
-        },
-      })
+    const params = `api-version=1.1&authorization_endpoint=${encodeURIComponent(`${authority}/oauth2/v2.0/authorize`)}`
 
-      return await response.data
+    try {
+
+      const response = await fetch(`${endpoint}?${params}`)
+
+      return await response.json();
     } catch (error) {
       throw error
     }
@@ -243,9 +239,10 @@ class AuthProvider {
   async getAuthorityMetadata(authority: string) {
     const endpoint = `${authority}/v2.0/.well-known/openid-configuration`
 
-    try {
-      const response = await axios.get(endpoint)
-      return await response.data
+    try {      
+      const response = await fetch(endpoint);
+      
+      return await response.json()
     } catch (error) {
       console.log(error)
     }

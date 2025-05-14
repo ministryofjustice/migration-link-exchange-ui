@@ -79,7 +79,6 @@
     "@ministryofjustice/hmpps-rest-client": "^0.0.1-alpha.2",
     "agentkeepalive": "^4.6.0",
     "applicationinsights": "^2.9.6",
-    "axios": "^1.9.0",
     "body-parser": "^1.20.3",
     "bunyan": "^1.8.15",
     "bunyan-format": "^0.2.1",
