@@ -51,6 +51,9 @@ generic-service:
     # IRSA configuration in your namespace will also be required, and then uncomment serviceAccountName above.
     # sqs-hmpps-audit-secret:
     #   AUDIT_SQS_QUEUE_URL: 'sqs_queue_url'
+    elasticache-output:
+      REDIS_HOST: primary_endpoint_address
+      REDIS_PASSWORD: auth_token
     # Manually created secret.
     auth-session:
       OAUTH_CLIENT_SECRET: OAUTH_CLIENT_SECRET
