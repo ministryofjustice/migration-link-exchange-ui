@@ -85,7 +85,6 @@ Having followed the tutorial, some changes were made to the file names to match 
 In this project, auth is limited to the following files:
 
 - `docker/.env` - where the environment variables are defined.
-<!-- TODO -->
 - `server/app.ts` - where auth middleware is applied and routes are mounted.
 - `server/auth/middleware` - where the auth middleware is defined.
 - `server/auth/provider.js` - where the auth provider is defined.
