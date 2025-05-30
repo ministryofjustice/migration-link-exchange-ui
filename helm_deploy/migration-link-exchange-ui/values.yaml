@@ -59,9 +59,5 @@ generic-service:
       EXPRESS_SESSION_SECRET: EXPRESS_SESSION_SECRET
       OAUTH_CLIENT_SECRET: OAUTH_CLIENT_SECRET
 
-  allowlist:
-    groups:
-      - internal
-
 generic-prometheus-alerts:
   targetApplication: migration-link-exchange-ui
