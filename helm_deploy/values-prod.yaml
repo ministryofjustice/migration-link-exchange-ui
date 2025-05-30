@@ -15,5 +15,8 @@ generic-service:
     # The following ID is not private, it forms part of the publicly visible oauth login url.
     OAUTH_CLIENT_ID: "5995e47b-365d-43cb-a715-28448ad0c3a4"
 
+  # Don't limit production to internal group.
+  allowlist: {}
+
 generic-prometheus-alerts:
   alertSeverity: N/A
