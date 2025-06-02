@@ -13,7 +13,7 @@
 
       <a class="hmpps-header__link hmpps-header__title__service-name" href="/">{{ applicationName }}</a>
 
-      {% if environmentName %}
+      {% if (environmentName) == 'DEV' %}
         <div class="govuk-phase-banner">
           {{ govukTag({
             text: environmentName,
