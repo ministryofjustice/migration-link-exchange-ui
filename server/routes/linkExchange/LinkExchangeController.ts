@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import FileInformationService from '../../services/FileInformationService'
 import locale from './link-exchange.locale.json'
 import { HttpError } from '../../utils/HttpError'
+import { FileInformation } from '../../interfaces/FileInformation'
 
 export default class LinkExchangeController {
   constructor(private readonly fileInformationService: FileInformationService) {}
@@ -21,39 +22,39 @@ export default class LinkExchangeController {
     return next()
   }
 
-  private filesHaveDuplicates = (files: any[]) => {
-    if(!files || files.length === 1) {
-      return false;
+  private filesHaveDuplicates = (files: FileInformation[]) => {
+    if (!files || files.length === 1) {
+      return false
     }
 
-    return files.some((file, index) => {
+    return files.some(file => {
       // Check if the file name ends in a number in parentheses, e.g. (1), (2), etc.
       // Or ends in a number in parentheses with a file extension e.g. (1).txt, (2).docx, etc.
-      const match = file.microsoftPath?.match(/\((\d+)\)(\.[a-z]{2,4})?$/);
+      const match = file.microsoftPath?.match(/\((\d+)\)(\.[a-z]{2,4})?$/)
       return !!match
     })
   }
 
-  private filesHaveLinkToMsFormsRoot = (files: any[]) => {
-    if(!files?.length) {
-      return false;
+  private filesHaveLinkToMsFormsRoot = (files: FileInformation[]) => {
+    if (!files?.length) {
+      return false
     }
-    console.log(files)
-    return files.some((file) => {
+    return files.some(file => {
       // Check if the file's Microsoft URL is the root of MS Forms
       return file.microsoftUrl === 'https://forms.office.com/'
     })
   }
 
-  private updateFilesToOpenInWeb = (files: any[]) => {
-    return files?.map((file) => {
-      if(file.microsoftFileType === 'file' && !file.microsoftUrl.includes('?')) {
+  private updateFilesToOpenInWeb = (files: FileInformation[]) => {
+    return files?.map(file => {
+      if (file.microsoftFileType === 'file' && !file.microsoftUrl.includes('?')) {
         return {
           ...file,
           microsoftUrl: `${file.microsoftUrl}?web=1`,
         }
       }
-    });
+      return file
+    })
   }
 
   private render = async (req: Request, res: Response, next: NextFunction) => {
@@ -72,20 +73,20 @@ export default class LinkExchangeController {
 
     try {
       if (req.body.link) {
-        files = await this.fileInformationService.getFilesBySourceURL(req.body.link)
+        files = (await this.fileInformationService.getFilesBySourceURL(req.body.link)) satisfies FileInformation[]
       }
 
-      const banners = [];
+      const banners = []
 
-      if(this.filesHaveDuplicates(files)) {
-        banners.push(locale.banners.duplicatesFound);
+      if (this.filesHaveDuplicates(files)) {
+        banners.push(locale.banners.duplicatesFound)
       }
 
-      if(this.filesHaveLinkToMsFormsRoot(files)) {
-        banners.push(locale.banners.formFound);
+      if (this.filesHaveLinkToMsFormsRoot(files)) {
+        banners.push(locale.banners.formFound)
       }
 
-      files = this.updateFilesToOpenInWeb(files);
+      files = this.updateFilesToOpenInWeb(files)
 
       return res.render('linkExchange', {
         locale,
