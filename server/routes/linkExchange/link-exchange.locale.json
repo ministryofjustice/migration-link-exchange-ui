@@ -4,8 +4,8 @@
   },
   "search": {
     "prompt": "Enter a Google Drive link",
-    "button": "Resolve link",
     "autoResolve": "Automatically paste and resolve Google Drive links"
+    "button": "Find file"
   },
   "fileDisplay": {
     "prefixes": {
