@@ -13,15 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
-  // Sets or removes the auto-resolve cookie
-  function setAutoResolveCookie(enabled) {
-    if (enabled) {
-      document.cookie = "autoResolve=true; path=/;";
-    } else {
-      document.cookie = "autoResolve=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    }
-  }
-
   // Regex pattern to validate Google Drive (or Docs) links
   const googleDriveLinkRegex = /^https?:\/\/(?:docs\.google|drive\.google)\.com\/(?:file\/)?(?:d|folders)\/[a-zA-Z0-9_-]+/;
 
@@ -66,31 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Handles auto-resolve functionality: sets the cookie and attempts to paste clipboard text
-  async function handleAutoResolve() {
-    setAutoResolveCookie(true);
-    await autoPasteClipboardIfDriveLink();
-  }
-
-  // Initializes the checkbox listener to trigger auto-resolve when checked
-  function initCheckboxListener() {
-    if (!checkbox) return;
-
-    // Recheck the box if the cookie indicates auto-resolve was previously enabled
-    if (getCookie("autoResolve") === "true") {
-      checkbox.checked = true;
-      handleAutoResolve();
-    }
-
-    checkbox.addEventListener('change', (event) => {
-      if (event.target.checked) {
-        handleAutoResolve();
-      } else {
-        setAutoResolveCookie(false);
-      }
-    });
-  }
-
   // Checks if exactly one file is in the file list and auto-clicks its link
   function handleFileListAutoClick() {
     const fileItems = document.querySelectorAll('.file-list__item');
@@ -106,6 +72,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initialize all functionality
-  initCheckboxListener();
   handleFileListAutoClick();
 });
