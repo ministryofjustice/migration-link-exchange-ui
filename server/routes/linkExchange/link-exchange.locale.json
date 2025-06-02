@@ -4,8 +4,7 @@
   },
   "search": {
     "prompt": "Enter a Google Drive link",
-    "button": "Resolve link",
-    "autoResolve": "Automatically paste and resolve Google Drive links"
+    "button": "Find file"
   },
   "fileDisplay": {
     "prefixes": {
@@ -15,13 +14,24 @@
     "goTos": {
       "folder": "Go to Sharepoint folder",
       "file": "Go to Sharepoint file",
-      "form": "Go to Microsoft Forms"
+      "form": "Go to Microsoft Forms",
+      "formLanding": "Go to Microsoft Forms landing page"
     },
     "noResults": "No matching files found &#128546;",
     "suggestions": [
       "Check that you have copied and pasted the full link correctly.",
       "If you know the file owner, ask them if the file was included in the migration."
     ]
+  },
+  "banners": {
+    "duplicatesFound": {
+      "title": "Duplicate files found",
+      "message": "There are multiple files with the same name. Please check the links below to find the correct file."
+    },
+    "formFound": {
+      "title": "Google Form detected",
+      "message": "The migration from Google to Microsoft did not include forms."
+    }
   },
   "errors": {
     "noLinkProvided": "Enter a Google Drive link.",
