@@ -57,6 +57,40 @@ export default class LinkExchangeController {
     })
   }
 
+  // TODO: This should not be in the UI layer, but in the API service layer.
+  // It is practical to keep it here for now, as it's easier to write in JavaScript.
+  private extractOwnerFromMicrosoftPath = (microsoftPath: string): string | undefined => {
+    // It should match the pattern `/personal/firstname_lastname_justice_gov_uk/Documents/GW`
+    const justiceMatch = microsoftPath.match(/^\/personal\/([^/]+)_justice_gov_uk(1|2)?\/Documents\/GW/)
+    if (justiceMatch) {
+      return justiceMatch[1].replace(/_/g, '.') + '@justice.gov.uk'
+    }
+    // Or, it could match the pattern `/personal/firstname_lastname_ppo_gov_uk/Documents/GW`
+    const ppoMatch = microsoftPath.match(/^\/personal\/([^/]+)_ppo_gov_uk(1|2)?\/Documents\/GW/)
+    if (ppoMatch) {
+      return ppoMatch[1].replace(/_/g, '.') + '@ppo.gov.uk'
+    }
+    // Or, it could match the pattern `/personal/firstname_lastname_publicguardian_gov_uk/Documents/GW`
+    const publicGuardianMatch = microsoftPath.match(/^\/personal\/([^/]+)_publicguardian_gov_uk(1|2)?\/Documents\/GW/)
+    if (publicGuardianMatch) {
+      return publicGuardianMatch[1].replace(/_/g, '.') + '@publicguardian.gov.uk'
+    }
+    // If no match is found, return undefined
+    return
+  }
+
+  private updateFilesWithCurrentOwner = (files: FileInformation[]) => {
+    return files?.map(file => {
+      if (file.microsoftFileType === 'file') {
+        return {
+          ...file,
+          microsoftOwnerEmail: this.extractOwnerFromMicrosoftPath(file.microsoftPath),
+        }
+      }
+      return file
+    })
+  }
+
   private render = async (req: Request, res: Response, next: NextFunction) => {
     const { errors, body } = req
     let files: FileInformation[]
@@ -77,12 +111,14 @@ export default class LinkExchangeController {
       }
 
       const formDetected = this.filesHaveLinkToMsFormsRoot(files)
-      
-      if(formDetected) {
-        files = [];
+
+      if (formDetected) {
+        files = []
       }
 
       files = this.updateFilesToOpenInWeb(files)
+
+      files = this.updateFilesWithCurrentOwner(files)
 
       return res.render('linkExchange', {
         locale,
