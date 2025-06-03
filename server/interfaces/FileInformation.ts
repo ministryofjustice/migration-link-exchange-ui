@@ -9,5 +9,5 @@ export interface FileInformation {
   microsoftUrl: string
   microsoftPath: string
   microsoftFileType: string
-  microsoftOwnerEmail?: string
+  microsoftOwnerEmail?: string | null
 }
