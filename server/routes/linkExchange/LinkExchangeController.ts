@@ -59,7 +59,7 @@ export default class LinkExchangeController {
 
   private render = async (req: Request, res: Response, next: NextFunction) => {
     const { errors, body } = req
-    let files
+    let files: FileInformation[]
 
     if (Object.keys(errors ?? {}).length) {
       return res.render('linkExchange', {
@@ -76,14 +76,10 @@ export default class LinkExchangeController {
         files = (await this.fileInformationService.getFilesBySourceURL(req.body.link)) satisfies FileInformation[]
       }
 
-      const banners = []
-
-      if (this.filesHaveDuplicates(files)) {
-        banners.push(locale.banners.duplicatesFound)
-      }
-
-      if (this.filesHaveLinkToMsFormsRoot(files)) {
-        banners.push(locale.banners.formFound)
+      const formDetected = this.filesHaveLinkToMsFormsRoot(files)
+      
+      if(formDetected) {
+        files = [];
       }
 
       files = this.updateFilesToOpenInWeb(files)
@@ -93,7 +89,8 @@ export default class LinkExchangeController {
         data: {
           form: body,
           files,
-          banners,
+          duplicatesDetected: this.filesHaveDuplicates(files),
+          formDetected,
         },
       })
     } catch (e) {

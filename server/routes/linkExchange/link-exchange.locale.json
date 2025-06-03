@@ -14,24 +14,38 @@
     "goTos": {
       "folder": "Go to Sharepoint folder",
       "file": "Go to Sharepoint file",
-      "form": "Go to Microsoft Forms",
-      "formLanding": "Go to Microsoft Forms landing page"
+      "form": "Go to Microsoft Forms"
     },
-    "noResults": "No matching files found &#128546;",
+    "noResults": "No matching files found",
     "suggestions": [
       "Check that you have copied and pasted the full link correctly.",
       "If you know the file owner, ask them if the file was included in the migration."
     ]
   },
-  "banners": {
-    "duplicatesFound": {
-      "title": "Duplicate files found",
-      "message": "There are multiple files with the same name. Please check the links below to find the correct file."
+  "details": {
+    "title": "About your results",
+    "entries": [
+      {
+        "title": "You may get more than one result",
+        "text": "This tool shows you where in OneDrive a Google file was migrated to. In most cases, it should find only one file. If the search returns multiple files, this is likely to be because there were several files with identical names in Google Drive."
+      },
+      {
+        "title": "The file may have moved",
+        "text": "The file path and links are based on where a file was initially migrated to. If you get an error when trying to open a file, this may be because the file has been moved or renamed."
+      },
+      {
+        "title": "You may need to request access",
+        "text": "File permissions were copied from Google. If you do not have permission to access a file, you might be shown a form for requesting access. Alternatively, contact the file owner or the person whose OneDrive the file is in."
+      }
+    ]
+  },
+  "warnings": {
+    "duplicatesDetected": "We found several possible files with the same file name.",
+    "formDetected": {
+      "title": "That file hasn’t been migrated",
+      "text": "You entered a link to a Google Forms file. These file types have not been migrated yet."
     },
-    "formFound": {
-      "title": "Google Form detected",
-      "message": "The migration from Google to Microsoft did not include forms."
-    }
+    "multiplesDetected": "We found several possible files."
   },
   "errors": {
     "noLinkProvided": "Enter a Google Drive link.",
