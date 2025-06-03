@@ -2,7 +2,13 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{{ govukWarningText({
+  text: "You can be fined up to £5,000 if you do not register.",
+  iconFallbackText: "Warning"
+}) }}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -12,8 +18,8 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">{{ locale.mainHeading.title }}</h1>
     </div>
-      <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-3">
-        <form method="post">
+    <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-3">
+      <form method="post">
         <div class="search-bar">
               <div class="search-bar__search">
                   {{ govukInput({
@@ -36,24 +42,23 @@
       </form>
     </div>
 
-    {% if data.banners.length > 0 %}
+    {% if data.duplicatesDetected %}
       <div class="govuk-grid-column-two-thirds">
-        {% for banner in data.banners %}
-          {% set html %}
-            <p class="govuk-notification-banner__heading">
-              {{ banner.message }}
-            </p>
-          {% endset %}
-          {{ govukNotificationBanner({
-            html: html,
-            titleText: banner.title,
-            classes: ['govuk-!-margin-bottom-4']
-          }) }}
-        {% endfor %}
+        {{ govukWarningText({
+          text: locale.warnings.duplicatesDetected,
+          iconFallbackText: "Warning"
+        }) }}
+      </div>
+    {% elif data.files.length > 1 %}
+      <div class="govuk-grid-column-two-thirds">
+        {{ govukWarningText({
+          text: locale.warnings.multiplesDetected,
+          iconFallbackText: "Warning"
+        }) }}
       </div>
     {% endif %}
 
-    <div class="govuk-grid-column-three-quarters">
+    <div class="govuk-grid-column-three-quarters govuk-!-margin-bottom-3">
       <div class="file-list">
         {% if data.files.length > 0 %}
           {% for file in data.files %}
@@ -62,11 +67,7 @@
                 {% if file.microsoftFileType === 'folder' %}
                   {{ locale.fileDisplay.goTos.folder }}
                 {% elif file.microsoftFileType === 'MicrosoftForm' %}
-                  {% if file.microsoftUrl === 'https://forms.office.com/' %}
-                    {{ locale.fileDisplay.goTos.formLanding }}
-                  {% else %}
-                    {{ locale.fileDisplay.goTos.form }}
-                  {% endif %}
+                  {{ locale.fileDisplay.goTos.form }}
                 {% else %}
                   {{ locale.fileDisplay.goTos.file }}
                 {% endif %}
@@ -75,13 +76,25 @@
                 <dt>{{ locale.fileDisplay.prefixes.path }}</dt>
                 <dd>{{ file.microsoftPath }}</dd>
                 <dt>{{ locale.fileDisplay.prefixes.owner }}</dt>
-                <dd>{{ file.googleOwnerEmail }}</dd>
+                <dd>{{ file.microsoftOwnerEmail or file.googleOwnerEmail }}</dd>
               </dl>
             </div>
           {% endfor %}
+        {% elif data.formDetected %}
+          <div class="file-list__item--no-results">
+            <h2 class="govuk-heading-m">{{ locale.warnings.formDetected.title }}</h2>
+            <p>{{ locale.warnings.formDetected.text }}</p>
+          </div>
         {% elif data.files.length == 0 %}
           <div class="file-list__item--no-results">
-            <p class="govuk-heading-m">{{ locale.fileDisplay.noResults | safe }}</p>
+            {% set html %}
+              <p class="govuk-heading-m">{{ locale.fileDisplay.noResults | safe }}</p>
+            {% endset %}
+            {{ govukWarningText({
+              html: html,
+              iconFallbackText: "Warning",
+              classes: "govuk-!-margin-bottom-0"
+            }) }}
             <ul class="govuk-list govuk-list--bullet">
               {% for suggestion in locale.fileDisplay.suggestions %}
                 <li>{{ suggestion }}</li>
@@ -91,5 +104,22 @@
         {% endif %}
       </div>
     </div>
+
+    {% if data.files.length %}
+      <div class="govuk-grid-column-two-thirds">
+        {% set html %}
+          <dl class="file-list__details__content">
+            {% for entry in locale.details.entries %}
+                <dt>{{ entry.title }}</dt>
+                <dd>{{ entry.text }}</dd>
+            {% endfor %}
+          </dl>
+        {% endset %}
+        {{ govukDetails({
+          summaryText: locale.details.title,
+          html: html
+        }) }}
+      </div>
+    {% endif %}
   </div>
 {% endblock %}

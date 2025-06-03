@@ -49,4 +49,26 @@ $thumb-background: #888;
       }
     }
   }
+
+  &__details {
+    &__content {
+      @include govuk-font($size: 16);
+      color: govuk-colour('dark-grey');
+      margin: 0;
+
+      dt {
+        margin-bottom: govuk-spacing(1);
+        font-weight: bold;
+        white-space: nowrap; /* Prevents wrapping */
+      }
+
+      dd {
+        margin: 0;
+        word-break: break-word; /* Ensures long text wraps properly */
+        &:not(:last-child) {
+          margin-bottom: govuk-spacing(2);
+        }
+      }
+    }
+  }
 }
