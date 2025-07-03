@@ -42,8 +42,8 @@
   "warnings": {
     "duplicatesDetected": "We found several possible files with the same file name.",
     "formDetected": {
-      "title": "That file hasn’t been migrated",
-      "text": "You entered a link to a Google Forms file. These file types have not been migrated yet."
+      "title": "That Google Form has been migrated to Microsoft Forms",
+      "text": "You entered a link for a Google Forms file. It has been migrated to Microsoft Forms, and can be found within the form owner's account."
     },
     "multiplesDetected": "We found several possible files."
   },
