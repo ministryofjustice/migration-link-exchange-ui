@@ -83,7 +83,7 @@
         {% elif data.formDetected %}
           <div class="file-list__item--no-results">
             <h2 class="govuk-heading-m">{{ locale.warnings.formDetected.title }}</h2>
-            <p>{{ locale.warnings.formDetected.text }}</p>
+            {{ locale.warnings.formDetected.html.join('') | safe }}
           </div>
         {% elif data.files.length == 0 %}
           <div class="file-list__item--no-results">
