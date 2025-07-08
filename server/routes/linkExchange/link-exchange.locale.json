@@ -42,8 +42,12 @@
   "warnings": {
     "duplicatesDetected": "We found several possible files with the same file name.",
     "formDetected": {
-      "title": "That Google Form has been migrated to Microsoft Forms",
-      "text": "You entered a link for a Google Forms file. It has been migrated to Microsoft Forms, and can be found within the form owner's account."
+      "title": "We don’t have any info on that file",
+      "html": [
+        "<p>You searched for a Google Forms link. Unfortunately, we don’t have any data on those files.</p>",
+        "<p>If you were the Google Forms owner, the migrated form should be in <a href='https://forms.office.com/' target='_blank'>Microsoft Forms.</a></p>",
+        "<p>Any responses to the form will have been migrated to your OneDrive in a folder called: “Migrated Forms responses from Google”.</p>"
+      ]
     },
     "multiplesDetected": "We found several possible files."
   },
